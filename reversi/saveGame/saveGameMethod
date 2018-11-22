@@ -1,0 +1,37 @@
+/** Saves the game by saving each player object into the saveFiles folder */
+public void saveGame() {
+	System.out.println("What do you want to save the game as?");
+	// Calls the getString method which allows the user to input a value and stores it as fileToExport
+	// with an addition of the directory where save files are saved
+	String fileToExport = "saveFiles/" + Menu.getString();
+		
+	// Creates a try block used for Java's error handling system
+	try {
+	// Creates an object of FileOutputStream used to export the file
+    	FileOutputStream fileOutput = new FileOutputStream(new File(fileToExport));
+		// Creates an object of ObjectOutputStream used to export the object
+		ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
+			
+		// Writes the objects to the file			
+		objectOutput.writeObject((Player) player1);
+		objectOutput.writeObject((Player) player2);
+		System.out.println("Game saved");
+			
+		// Closes the file
+		objectOutput.close();
+		fileOutput.close();
+	}
+		
+	// Runs if no file has been found
+	catch (FileNotFoundException e) {
+    	System.out.println("The File has not been found");
+		saveGame();
+	}
+		
+	// Runs if there's a more general error
+	catch (IOException e) {
+		System.out.println("An error has occured");
+		// Prints out Java's interpretation of the error
+		e.printStackTrace();
+	}
+}
