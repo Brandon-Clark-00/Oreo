@@ -1,0 +1,42 @@
+/** Loads the game by loading each player object from the user's file in the saveFiles folder */
+public void loadGame() {
+	System.out.println("Which save file do you want to load?");
+	// Calls the getString method which allows the user to input a value and stores it as fileToImport
+	String fileToImport = "saveFiles/" + Menu.getString();
+		
+	// Creates a try block used for Java's error handling system
+	try {
+		// Creates an object of FileInputStream used to import the file
+		FileInputStream fileInput = new FileInputStream(new File(fileToImport));
+		// Creates an object of ObjectInputStream used to import the object
+		ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+			
+		// Stores the object from the file
+		player1 = (Player) objectInput.readObject();
+		player2 = (Player) objectInput.readObject();
+		System.out.println("Game has been loaded");
+			
+		// Closes the file
+		objectInput.close();
+		fileInput.close();
+	}
+		
+	// Runs if there's no file found
+	catch (FileNotFoundException e) {
+		System.out.println("No saved game has been found");
+		loadGame();
+	}
+		
+	// Runs if there's no class found
+    catch (ClassNotFoundException e) {
+		System.out.println("No valid save file has been found");
+		loadGame();
+	}
+		
+	// Runs if there's a more general error
+	catch (IOException e) {
+		System.out.println("An error has occured");
+		// Prints out Java's interpretation of the error
+		e.printStackTrace();
+	}
+}

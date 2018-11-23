@@ -1,0 +1,10 @@
+/** This method asks the user for input and returns it as a string 
+ * @return The user's input */
+public static String getString() {
+	String input;
+	// Creates an object of the java class Scanner 
+	Scanner s = new Scanner(System.in);
+	// Gets the users input and stores it as a String
+	input = s.nextLine();
+	return input;
+}
